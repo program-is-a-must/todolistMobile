@@ -3,8 +3,8 @@ services:
     name: todowall-api
     rootDir: todowall-api
     plan: free
-    env: node
-    buildCommand: ./render-build.sh
+    env: nixpacks
+    buildCommand: bash ./render-build.sh
     startCommand: php artisan serve --host=0.0.0.0 --port=10000
     healthCheckPath: /up
     disk:
