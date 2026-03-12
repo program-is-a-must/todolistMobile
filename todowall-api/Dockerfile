@@ -1,4 +1,4 @@
-FROM php:8.3-cli as base
+FROM php:8.3-cli AS base
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git unzip libsqlite3-0 libsqlite3-dev ca-certificates \
