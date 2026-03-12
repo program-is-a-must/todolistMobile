@@ -3,8 +3,8 @@ services:
     name: todowall-api
     plan: free
     env: docker
-    dockerContext: todowall-api
-    dockerfilePath: todowall-api/Dockerfile
+    dockerContext: .
+    dockerfilePath: Dockerfile
     healthCheckPath: /up
     disk:
       name: data
