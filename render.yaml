@@ -1,9 +1,9 @@
 services:
   - type: web
     name: todowall-api
-    rootDir: todowall-api
     plan: free
     env: docker
+    dockerContext: .
     dockerfilePath: Dockerfile
     healthCheckPath: /up
     disk:
