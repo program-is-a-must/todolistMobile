@@ -16,6 +16,8 @@ WORKDIR /app
 COPY todowall-api/composer.json ./
 COPY todowall-api/composer.lock* ./
 
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 # Install dependencies optimized for production
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
