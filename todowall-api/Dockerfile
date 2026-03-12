@@ -11,21 +11,23 @@ RUN docker-php-ext-install pdo pdo_sqlite
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
-COPY . /app
+
+# Copy dependency files first
+COPY composer.json composer.lock ./
 
 # Install dependencies optimized for production
 RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
+# Copy the rest of the application
+COPY . .
+
 # Cache config/routes/views during build for faster boots
-RUN php artisan config:clear || true \
- && php artisan route:clear || true \
- && php artisan view:clear || true \
- && php artisan config:cache \
+RUN php artisan config:cache \
  && php artisan route:cache \
  && php artisan view:cache
 
 # Startup script
-COPY ./start.sh /usr/local/bin/start.sh
+COPY start.sh /usr/local/bin/start.sh
 RUN chmod +x /usr/local/bin/start.sh
 
 EXPOSE 10000
