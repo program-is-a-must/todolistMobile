@@ -1,0 +1,43 @@
+[1mdiff --git a/Dockerfile b/Dockerfile[m
+[1mdeleted file mode 100644[m
+[1mindex 490fc4f..0000000[m
+[1m--- a/Dockerfile[m
+[1m+++ /dev/null[m
+[36m@@ -1,37 +0,0 @@[m
+[31m-FROM php:8.3-cli AS base[m
+[31m-[m
+[31m-RUN apt-get update && apt-get install -y --no-install-recommends \[m
+[31m-    git unzip libsqlite3-0 libsqlite3-dev ca-certificates \[m
+[31m-    && rm -rf /var/lib/apt/lists/*[m
+[31m-[m
+[31m-# PHP extensions[m
+[31m-RUN docker-php-ext-install pdo pdo_sqlite[m
+[31m-[m
+[31m-# Install Composer[m
+[31m-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer[m
+[31m-[m
+[31m-WORKDIR /app[m
+[31m-[m
+[31m-# Copy dependency files from todowall-api subdirectory[m
+[31m-COPY todowall-api/composer.json ./[m
+[31m-COPY todowall-api/composer.lock* ./[m
+[31m-[m
+[31m-ENV COMPOSER_ALLOW_SUPERUSER=1[m
+[31m-[m
+[31m-# Install dependencies optimized for production[m
+[31m-RUN composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist[m
+[31m-[m
+[31m-# Copy the rest of the application from todowall-api[m
+[31m-COPY todowall-api/ .[m
+[31m-[m
+[31m-# Cache config/routes/views during build for faster boots[m
+[31m-RUN php artisan config:cache \[m
+[31m- && php artisan route:cache \[m
+[31m- && php artisan view:cache[m
+[31m-[m
+[31m-# Startup script (using the one in todowall-api)[m
+[31m-COPY todowall-api/start.sh /usr/local/bin/start.sh[m
+[31m-RUN chmod +x /usr/local/bin/start.sh[m
+[31m-[m
+[31m-EXPOSE 10000[m
+[31m-CMD ["bash", "/usr/local/bin/start.sh"][m
