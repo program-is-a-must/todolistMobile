@@ -41,7 +41,7 @@
       ]
     ],
     "extra": {
-      "EXPO_PUBLIC_API_URL": "http://192.168.1.175:8000"
+       "EXPO_PUBLIC_API_URL": "https://todowall-api.onrender.com"
     },
     "experiments": {
       "typedRoutes": true,
