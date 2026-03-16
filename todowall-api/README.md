@@ -54,6 +54,68 @@ In order to ensure that the Laravel community is welcoming to all, please review
 
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
+## Railway Deployment
+
+This project is configured for easy deployment on Railway with PostgreSQL support.
+
+### Prerequisites
+- Railway account (https://railway.app)
+- GitHub repository connected to Railway
+- PostgreSQL plugin enabled in Railway
+
+### Deployment Steps
+
+1. **Connect Your Repository to Railway**
+   - Create a new Railway project
+   - Connect your GitHub repository
+   - Railway will auto-detect this is a Laravel PHP project
+
+2. **Set Environment Variables**
+   - Go to Railway Dashboard → Your Project → Variables
+   - Set the following required variables:
+     - `APP_KEY`: Generate with `php artisan key:generate --show` (locally)
+     - `APP_ENV`: Set to `production`
+     - `APP_DEBUG`: Set to `false`
+     - `APP_URL`: Set to your Railway-provided URL
+   - PostgreSQL variables will be auto-injected when you add the PostgreSQL plugin
+
+3. **Add PostgreSQL Database Plugin**
+   - In your Railway project, add PostgreSQL plugin
+   - Railway will automatically expose `DATABASE_URL` which Laravel uses automatically
+
+4. **Build & Start Commands**
+   - Build Command: `composer install --no-dev --optimize-autoloader`
+   - Start Command: Defined in `Procfile` (uses `php artisan serve`)
+
+5. **Database Migrations**
+   - Migrations run automatically via the `release` script in the `Procfile`
+   - No manual migration step needed
+
+### Local Development
+
+```bash
+# Install dependencies
+composer install
+
+# Create .env file
+cp .env.example .env
+
+# Generate application key
+php artisan key:generate
+
+# Run migrations
+php artisan migrate
+
+# Start development server
+php artisan serve
+```
+
+### Configuration Files
+- `Procfile` - Defines Railway build and start commands
+- `.env.example` - Environment configuration template (PostgreSQL enabled by default)
+- `config/database.php` - Database configuration (PostgreSQL set as default)
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
