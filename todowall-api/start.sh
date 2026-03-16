@@ -6,7 +6,7 @@ echo "==> Preparing environment"
 if [ ! -f .env ]; then
   cp .env.example .env
 fi
-
+#not sure if its working.
 # Generate key if missing
 if ! grep -q '^APP_KEY=' .env || [ -z "$(grep '^APP_KEY=' .env | cut -d= -f2)" ]; then
   php artisan key:generate --force

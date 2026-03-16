@@ -29,3 +29,5 @@ RUN chmod +x start.sh
 EXPOSE 8080
 
 CMD ["bash", "start.sh"]
+
+#ok with this Dockerfile, you can build the image and run the container for your Laravel application. Make sure to have a `start.sh` script that starts the Laravel server, typically using `php artisan serve --host=
